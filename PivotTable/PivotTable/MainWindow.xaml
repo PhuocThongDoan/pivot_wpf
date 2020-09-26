@@ -1,0 +1,114 @@
+﻿<Window x:Class="PivotTable.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PivotTable"
+        mc:Ignorable="d"
+        Title="PivotTable" Height="500" Width="800"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="183*"/>
+            <RowDefinition Height="19*"/>
+            <RowDefinition Height="271*"/>
+        </Grid.RowDefinitions>
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="198" Margin="294,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="490" Grid.RowSpan="3"/>
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="406" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="284" Grid.RowSpan="3"/>
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="208" Margin="294,5.8,0,0" Stroke="Black" VerticalAlignment="Top" Width="490" Grid.Row="2"/>
+        <!--listview bang diem-->
+        <ListView x:Name="dsDiem" ItemsSource="{Binding Items1}" Margin="10,10,504.6,57.4" FontSize="15" Grid.RowSpan="3">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                    <Setter Property="BorderBrush" Value="LightGray" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="MASV">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding MASV}" HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Mon">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Mon}" HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Diem">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Diem}" HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <!--pivot listview-->
+        <ListView x:Name="dsDiemcaonhat" ItemsSource="{Binding Items1}" Margin="295,5.8,10,57.6" FontSize="15" Grid.Row="2">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                    <Setter Property="BorderBrush" Value="LightGray" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="MASV">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding MASV}" HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Toan">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Toan}" HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Ly">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Ly}" HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Hoa">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Hoa}" HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <materialDesign:PackIcon Kind="AccountPlus" Margin="600,0,0,15.2" VerticalAlignment="Bottom" Height="150" Width="150" Grid.RowSpan="2" />
+        <!--textbox them du lieu-->
+        <TextBox x:Name="txt_masv" materialDesign:HintAssist.Hint="MASV" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="300,10,290,119.2" FontSize="13" />
+        <TextBox x:Name="txt_mon" materialDesign:HintAssist.Hint="Mon" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="300,60,290,69.2" />
+        <TextBox x:Name="txt_diem" materialDesign:HintAssist.Hint="Diem" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="300,110,290,19.2" />
+        <!--btn dieu khien-->
+        <Button x:Name="btn_add" Style="{StaticResource MaterialDesignRaisedDarkButton}" ToolTip="Resource name: MaterialDesignRaisedLightDarkButton" Margin="660,219.8,10,9.6" Height="Auto" Click="btn_add_Click" Content="ADD" Grid.Row="2"/>
+        <Button x:Name="btn_refesh" Style="{StaticResource MaterialDesignRaisedDarkButton}" ToolTip="Resource name: MaterialDesignRaisedLightDarkButton" Margin="531,219.8,139,9.6" Height="Auto" Click="btn_refesh_Click" Content="REFESH" Grid.Row="2"/>
+    </Grid>
+</Window>
