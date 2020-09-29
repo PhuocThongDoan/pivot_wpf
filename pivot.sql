@@ -1,4 +1,4 @@
---YC1
+ï»¿--YC1
 CREATE DATABASE BTXOAYBANG
 --DROP DATABASE BTXOAYBANG
 USE BTXOAYBANG;
@@ -11,25 +11,51 @@ CREATE TABLE BANGDIEM
 	DIEM float,
 );
 
-INSERT INTO BANGDIEM VALUES ('1712801', N'Toán', 8.5);
-INSERT INTO BANGDIEM VALUES ('1712802', N'Lý', 8.5);
-INSERT INTO BANGDIEM VALUES ('1712802', N'Lý', 9);
-INSERT INTO BANGDIEM VALUES ('1712803', N'Lý', 8.5);
-INSERT INTO BANGDIEM VALUES ('1712803', N'Hóa', 7);
+INSERT INTO BANGDIEM VALUES ('1712801', N'ToÃ¡n', 8.5);
+INSERT INTO BANGDIEM VALUES ('1712802', N'LÃ½', 8.5);
+INSERT INTO BANGDIEM VALUES ('1712802', N'LÃ½', 9);
+INSERT INTO BANGDIEM VALUES ('1712803', N'LÃ½', 8.5);
+INSERT INTO BANGDIEM VALUES ('1712803', N'HÃ³a', 7);
+
 
 SELECT * FROM BANGDIEM;
 
 --YC2
-SELECT *
-FROM
-(SELECT MASV, MON, DIEM FROM BANGDIEM) BANGNGUON
-PIVOT
-(
-	MAX(DIEM)
-	FOR MON IN ([Toán], [Lý], [Hóa])
-) BANGCHUYEN;
+--SELECT *
+--FROM
+--(SELECT MASV, MON, DIEM FROM BANGDIEM) BANGNGUON
+--PIVOT
+--(
+--	MAX(DIEM)
+--	FOR MON IN ([ToÃ¡n], [LÃ½], [HÃ³a])
+--) BANGCHUYEN;
 
+DECLARE @subject AS NVARCHAR(MAX),
+		@query AS NVARCHAR(MAX)
+ 
+--Lay toan bo mon hoc trong column mon hoc
+select @subject = STUFF((SELECT ',' + QUOTENAME(MON) 
+                    from BANGDIEM
+                    group by MON
+            FOR XML PATH(''), TYPE
+            ).value('.', 'NVARCHAR(MAX)') 
+        ,1,1,'')
 
+--Lay diem cao nhat tai tung mon hoc cua moi sinh vien
+set @query = 'SELECT MASV,' + @subject + ' from 
+             (
+                select MASV, MON, DIEM
+                from BANGDIEM
+            ) src
+            pivot 
+            (
+                max(DIEM)
+                for MON in (' + @subject + ')
+            ) p '
+
+execute(@query);
+
+INSERT INTO BANGDIEM VALUES ('1712803', N'VÄƒn', 7);
 
 
 

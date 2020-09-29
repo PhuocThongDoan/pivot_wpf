@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data.Sql;
+using System.Data;
 
 namespace PivotTable
 {
@@ -38,14 +40,7 @@ namespace PivotTable
             public string Mon { get; set; }
             public float Diem { get; set; }
         }
-        //Item add listview diem cao nhat (pivot)
-        public class ItemdsDiemCaoNhat
-        {
-            public string MASV { get; set; }
-            public float Toan { get; set; }
-            public float Ly { get; set; }
-            public float Hoa { get; set; }
-        }
+ 
         //function get diem cao nhat cua sinh vien tai mon hoc
         public float getMaxSubject(string mssv, string mon)
         {
@@ -102,26 +97,72 @@ namespace PivotTable
         //refesh du lieu listview pivot
         private void btn_refesh_Click(object sender, RoutedEventArgs e)
         {
-            dsDiemcaonhat.Items.Clear();
-            //lay danh sach ma sinh vien
-            List<string> list_mssv  = new List<string>();
+            //lay danh sach mon hoc
+            List<string> list_mon = new List<string>();
+
+            for (int i = 0; i < dsDiem.Items.Count; i++)
+            {
+                ItemdsDiem item = dsDiem.Items[i] as ItemdsDiem;
+                list_mon.Add(item.Mon);
+            }
+
+            //bo di cac mon bi trung lap
+            List<string> list_mon_distinct = list_mon.Distinct().ToList();
+            //add column vao grid
+            DataGridTextColumn MssvColumn = new DataGridTextColumn();
+            MssvColumn.Header = "MSSV";
+            MssvColumn.Binding = new Binding("MSSV");
+            DiemCaoNhatDataGrid.Columns.Add(MssvColumn);
+
+            for (int i = 0; i < list_mon_distinct.Count; i++)
+            {
+                DataGridTextColumn SubjectColumn = new DataGridTextColumn();
+                SubjectColumn.Header = list_mon_distinct[i];
+                SubjectColumn.Binding = new Binding(list_mon_distinct[i]);
+                DiemCaoNhatDataGrid.Columns.Add(SubjectColumn);
+            }
+
+            //khoi tao datatable luu du lieu
+            DataTable PointDatatable = new DataTable();
+            PointDatatable.Columns.Add("MSSV", typeof(string));
+
+            for (int i = 0; i < list_mon_distinct.Count; i++)
+            {
+                PointDatatable.Columns.Add(list_mon_distinct[i], typeof(string));
+            } 
+            
+            List<string> list_mssv = new List<string>();
             for (int i = 0; i < dsDiem.Items.Count; i++)
             {
                 ItemdsDiem item = dsDiem.Items[i] as ItemdsDiem;
                 list_mssv.Add(item.MASV);
             }
-            //bo di cac ma sinhvien bi trung lap
+
+            //bo di cac ma sinh vien bi trung lap
             List<string> list_mssv_distinct = list_mssv.Distinct().ToList();
             //lay diem cao nhat tai tung mon hoc cua tat ca sinh vien
-            //sau do add vao listview pivot
+            //sau do add vao Datatable pivot
+
             for (int i = 0; i < list_mssv_distinct.Count; i++)
             {
-                string masv = list_mssv_distinct[i];
-                float maxToan = getMaxSubject(masv, "Toan");
-                float maxLy = getMaxSubject(masv, "Ly");
-                float maxHoa = getMaxSubject(masv, "Hoa");
-                dsDiemcaonhat.Items.Add(new ItemdsDiemCaoNhat { MASV = masv, Toan = maxToan, Ly = maxLy, Hoa = maxHoa });          
+                string[] DiemCaoNhat = new string[list_mon_distinct.Count + 1];
+                string mssv = list_mssv_distinct[i];
+                DiemCaoNhat[0] = mssv;
+                int index = 1;
+
+                for (int j = 0; j < list_mon_distinct.Count; j++)
+                {
+                    float max = getMaxSubject(mssv, list_mon_distinct[j]);
+                    DiemCaoNhat[index++] = max.ToString();
+                }
+
+                PointDatatable.Rows.Add(DiemCaoNhat);              
             }
+
+            //Xoa grid cu sau do hien thi du lieu moi
+            DiemCaoNhatDataGrid.Columns.Clear();
+            DiemCaoNhatDataGrid.ItemsSource = null;
+            DiemCaoNhatDataGrid.ItemsSource = PointDatatable.DefaultView;
         }
     }
 }

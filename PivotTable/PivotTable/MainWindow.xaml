@@ -15,16 +15,20 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="60*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="183*"/>
             <RowDefinition Height="19*"/>
             <RowDefinition Height="271*"/>
         </Grid.RowDefinitions>
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="198" Margin="294,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="490" Grid.RowSpan="3"/>
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="406" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="284" Grid.RowSpan="3"/>
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="208" Margin="294,5.8,0,0" Stroke="Black" VerticalAlignment="Top" Width="490" Grid.Row="2"/>
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="198" Margin="280.7,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="490" Grid.RowSpan="3" Grid.Column="1"/>
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="406" Margin="10,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="284" Grid.RowSpan="3" Grid.ColumnSpan="2"/>
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="208" Margin="280.7,6.2,0,0" Stroke="Black" VerticalAlignment="Top" Width="490" Grid.Row="2" Grid.Column="1"/>
         <!--listview bang diem-->
-        <ListView x:Name="dsDiem" ItemsSource="{Binding Items1}" Margin="10,10,504.6,57.4" FontSize="15" Grid.RowSpan="3">
+        <ListView x:Name="dsDiem" ItemsSource="{Binding Items1}" Margin="10,10,504.6,57.4" FontSize="15" Grid.RowSpan="3" Grid.ColumnSpan="2">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -60,7 +64,7 @@
             </ListView.View>
         </ListView>
         <!--pivot listview-->
-        <ListView x:Name="dsDiemcaonhat" ItemsSource="{Binding Items1}" Margin="295,5.8,10,57.6" FontSize="15" Grid.Row="2">
+        <!--<ListView x:Name="dsDiemcaonhat" ItemsSource="{Binding Items1}" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible" Margin="281.7,6.2,9.6,57.4" FontSize="15" Grid.Row="2" Grid.Column="1" >
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -101,14 +105,15 @@
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
-        </ListView>
-        <materialDesign:PackIcon Kind="AccountPlus" Margin="600,0,0,15.2" VerticalAlignment="Bottom" Height="150" Width="150" Grid.RowSpan="2" />
+        </ListView>-->
+        <materialDesign:PackIcon Kind="AccountPlus" Margin="586.7,0,0,14.8" VerticalAlignment="Bottom" Height="150" Width="150" Grid.RowSpan="2" Grid.Column="1" />
         <!--textbox them du lieu-->
-        <TextBox x:Name="txt_masv" materialDesign:HintAssist.Hint="MASV" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="300,10,290,119.2" FontSize="13" />
-        <TextBox x:Name="txt_mon" materialDesign:HintAssist.Hint="Mon" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="300,60,290,69.2" />
-        <TextBox x:Name="txt_diem" materialDesign:HintAssist.Hint="Diem" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="300,110,290,19.2" />
+        <TextBox x:Name="txt_masv" materialDesign:HintAssist.Hint="MASV" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="286.7,10,289.6,118.6" FontSize="13" Grid.Column="1" />
+        <TextBox x:Name="txt_mon" materialDesign:HintAssist.Hint="Mon" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="286.7,60,289.6,68.6" Grid.Column="1" />
+        <TextBox x:Name="txt_diem" materialDesign:HintAssist.Hint="Diem" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="286.7,110,289.6,18.6" Grid.Column="1" />
         <!--btn dieu khien-->
-        <Button x:Name="btn_add" Style="{StaticResource MaterialDesignRaisedDarkButton}" ToolTip="Resource name: MaterialDesignRaisedLightDarkButton" Margin="660,219.8,10,9.6" Height="Auto" Click="btn_add_Click" Content="ADD" Grid.Row="2"/>
-        <Button x:Name="btn_refesh" Style="{StaticResource MaterialDesignRaisedDarkButton}" ToolTip="Resource name: MaterialDesignRaisedLightDarkButton" Margin="531,219.8,139,9.6" Height="Auto" Click="btn_refesh_Click" Content="REFESH" Grid.Row="2"/>
+        <Button x:Name="btn_add" Style="{StaticResource MaterialDesignRaisedDarkButton}" ToolTip="Resource name: MaterialDesignRaisedLightDarkButton" Margin="646.7,220.2,9.6,9.4" Height="Auto" Click="btn_add_Click" Content="ADD" Grid.Row="2" Grid.Column="1"/>
+        <Button x:Name="btn_refesh" Style="{StaticResource MaterialDesignRaisedDarkButton}" ToolTip="Resource name: MaterialDesignRaisedLightDarkButton" Margin="517.7,220.2,138.6,9.4" Height="Auto" Click="btn_refesh_Click" Content="REFESH" Grid.Row="2" Grid.Column="1"/>
+        <DataGrid x:Name="DiemCaoNhatDataGrid" Grid.Column="1" HorizontalAlignment="Left" Height="200" Margin="285.2,10,0,0" Grid.Row="2" VerticalAlignment="Top" Width="480"/>
     </Grid>
 </Window>
